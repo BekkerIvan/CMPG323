@@ -3,7 +3,7 @@ package com.cmpg.nwu.accsystem.orm.entity;
 import com.cmpg.nwu.accsystem.orm.ORMBase;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.*;
 
 @Entity
 @Table(name = "MilesSpent")
@@ -12,8 +12,11 @@ public class MilesSpent extends ORMBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long Id;
 
+    @Column(columnDefinition = "DATETIME DEFAULT CURDATE()")
+    public Timestamp DateAccumulated;
+
     @Column()
-    public Date DateAccumulated;
+    public float MilesSpent;
 
     @ManyToOne
     @JoinColumn(name = "MilesAccount", referencedColumnName = "Id")

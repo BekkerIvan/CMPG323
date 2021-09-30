@@ -27,4 +27,20 @@ public class ProjectFunction {
 
         return StringBuilderObj.toString();
     }
+
+    public static String typeOf(Object PassedObj) {
+        return PassedObj.getClass().getName();
+    }
+
+    public static Map<String, String> initAPIMessage() {
+        return new HashMap<String, String>();
+    }
+
+    public static void setAPIOutput(Map<String, String> APIMessageArr, Boolean SuccessResult) {
+        APIMessageArr.put("Success", String.valueOf(SuccessResult));
+    }
+
+    public static void setAPIValue(Map<String, String> APIMessageArr, String KeyValueStr, String ValueStr) {
+        APIMessageArr.put(KeyValueStr, ValueStr);
+    }
 }

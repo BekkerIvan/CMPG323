@@ -13,10 +13,10 @@ public class MilesAccount extends ORMBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long Id;
 
-    @Column(columnDefinition = "INTEGER DEFAULT 0")
-    public int TotalMilesEarned;
+    @Column(columnDefinition = "FLOAT DEFAULT 0")
+    public float TotalMilesEarned;
 
-    @Column(columnDefinition = "DATE DEFAULT CURDATE()")
+    @Column(columnDefinition = "DATE NOT NULL DEFAULT CURDATE()")
     public Date DateActive;
 
     @Column(nullable = true, columnDefinition = "Boolean default 0")

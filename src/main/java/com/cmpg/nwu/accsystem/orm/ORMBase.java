@@ -32,24 +32,4 @@ public class ORMBase {
     public static String getRawEntityName() {
         return EntityNameStr;
     }
-
-    public static <T> List<T> Load(Long Id) {
-        return new ArrayList<T>();
-    }
-
-    public static <T> List<T> Load(int Id) {
-        System.out.println(getRawEntityName());
-        return new ArrayList<T>();
-    }
-
-//    public static <T> List<T> Load2(int Id) {
-//        Class<?> clazz = Class.forName(getRawEntityName());
-//        Object date = clazz.newInstance();
-//    }
-
-//    public Field[] Save() {
-//        Field[] AccountFields = this.getClass().getDeclaredFields();
-//        AccountFields.
-//        return AccountFields;
-//    }
 }

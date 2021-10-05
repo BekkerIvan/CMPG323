@@ -1,21 +1,18 @@
 package com.cmpg.nwu.accsystem;
 
-import com.cmpg.nwu.accsystem.orm.ORMBase;
+
 import com.cmpg.nwu.accsystem.orm.entity.Account;
-import com.cmpg.nwu.accsystem.orm.entity.Company;
-import com.cmpg.nwu.accsystem.orm.entity.Voucher;
 import com.cmpg.nwu.accsystem.orm.repo.AccountRepository;
-import com.cmpg.nwu.accsystem.orm.repo.MilesAccountRepository;
+import com.cmpg.nwu.accsystem.project_functions.ProjectFunction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -29,13 +26,11 @@ public class AccSystemApplication {
     @Autowired
     public AccountRepository Repository;
 
-    @GetMapping("/hello")
-    public String sayHello(@RequestParam(value = "length", defaultValue = "1") String StringLengthInt)  {
-        String Teest = "";
-        List<Account> test = Repository.findAll();
-        for (Account test2: test) {
-            Teest += "<br> "+test2.ContactNumber;
-        }
-        return Teest;
+    @GetMapping("/password/{username}/{password}")
+    public String setPassword(@PathVariable(value = "username") String UsernameStr, @PathVariable(value = "password") String PasswordStr)  {
+        Account accObj = Repository.findByUsername(UsernameStr);
+        accObj.Password = ProjectFunction.hashPassword(PasswordStr);
+        Repository.save(accObj);
+        return accObj.Password;
     }
 }

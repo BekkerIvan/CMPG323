@@ -1,11 +1,9 @@
-import './App.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+ReactDOM.render(
+    <React.StrictMode>
 
-function App() {
-    const name = "Ivan";
-
-  return (
-      <></>
-  );
-}
-
-export default App;
+    </React.StrictMode>,
+    document.getElementById('root')
+);

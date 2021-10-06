@@ -32,6 +32,11 @@ public class VoucherController {
         Voucher RedeemingVoucherObj = VoucherRepository.LoadById(VoucherId);
         MilesAccount MilesAccountObj = MilesAccountRepository.loadActiveMilesAccountById(MilesAccountId);
         if (RedeemingVoucherObj != null && MilesAccountObj != null) {
+            if (RedeemingVoucherObj.Redeemed) {
+                ProjectFunction.setAPIOutput(ReturnArr, false);
+                ProjectFunction.setAPIValue(ReturnArr, "Message", "Voucher already redeemed. ("+RedeemingVoucherObj.VoucherName+")");
+                return ReturnArr;
+            }
             if (RedeemingVoucherObj.MilesCost > MilesAccountObj.TotalMilesEarned) {
                 ProjectFunction.setAPIOutput(ReturnArr, false);
                 ProjectFunction.setAPIValue(ReturnArr, "Message", "You do not have enough miles to redeem voucher");

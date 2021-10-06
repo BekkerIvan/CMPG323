@@ -1,7 +1,6 @@
-import {useHistory} from "react-router-dom";
+
 
 const authentication = () => {
-    const history = useHistory();
 
     const authenticateUser = () => {
         let password = document.getElementById("Password").value;

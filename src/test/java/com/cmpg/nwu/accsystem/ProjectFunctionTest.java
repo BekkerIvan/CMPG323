@@ -59,4 +59,28 @@ public class ProjectFunctionTest {
         ProjectFunction.setAPIValue(TestHashMap, "Unit", "Test");
         assert Objects.equals(TestHashMap.get("Unit"), "Test");
     }
+
+    @Test
+    public void validEmailAddress() {
+        String ValidEmailAddressStr = "BarbraGibble578@gmail.com";
+        assert ProjectFunction.validateEmailAddress(ValidEmailAddressStr);
+    }
+
+    @Test
+    public void invalidEmailAddress() {
+        String ValidEmailAddressStr = "BarbraGibble578@gmail";
+        assert !ProjectFunction.validateEmailAddress(ValidEmailAddressStr);
+    }
+
+    @Test
+    public void validIdNumber() {
+        String ValidIdNumberStr = "7010240128084";
+        assert ProjectFunction.validateIdNumber(ValidIdNumberStr);
+    }
+
+    @Test
+    public void invalidIdNumber() {
+        String ValidIdNumberStr = "7010240128083";
+        assert !ProjectFunction.validateIdNumber(ValidIdNumberStr);
+    }
 }

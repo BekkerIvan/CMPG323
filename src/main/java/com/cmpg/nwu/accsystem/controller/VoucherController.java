@@ -37,7 +37,11 @@ public class VoucherController {
                 ProjectFunction.setAPIValue(ReturnArr, "Message", "Voucher already redeemed. ("+RedeemingVoucherObj.VoucherName+")");
                 return ReturnArr;
             }
-            if (RedeemingVoucherObj.MilesCost > MilesAccountObj.TotalMilesEarned) {
+            float DiscountedMiles = RedeemingVoucherObj.MilesCost;
+            if (RedeemingVoucherObj.DiscountedPercentage > 0) {
+                DiscountedMiles -= DiscountedMiles * RedeemingVoucherObj.DiscountedPercentage;
+            }
+            if (DiscountedMiles > MilesAccountObj.TotalMilesEarned) {
                 ProjectFunction.setAPIOutput(ReturnArr, false);
                 ProjectFunction.setAPIValue(ReturnArr, "Message", "You do not have enough miles to redeem voucher");
                 return ReturnArr;
@@ -47,11 +51,6 @@ public class VoucherController {
             SpendingMilesObj.MilesAccount = MilesAccountObj;
             SpendingMilesObj.DateAccumulated = new Timestamp(new Date().getTime());
             SpendingMilesObj.Voucher = RedeemingVoucherObj;
-
-            float DiscountedMiles = RedeemingVoucherObj.MilesCost;
-            if (RedeemingVoucherObj.DiscountedPercentage > 0) {
-                DiscountedMiles -= DiscountedMiles * RedeemingVoucherObj.DiscountedPercentage;
-            }
             SpendingMilesObj.MilesSpent = DiscountedMiles;
             RedeemingVoucherObj.Redeemed = true;
             MilesAccountObj.TotalMilesEarned -= DiscountedMiles;

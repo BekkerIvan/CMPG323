@@ -17,4 +17,5 @@ public interface MilesAccountRepository extends JpaRepository<MilesAccount, Long
 
     @Query (value = "SELECT * FROM MilesAccount WHERE Id = ?1 AND IsActive = 1", nativeQuery = true)
     MilesAccount loadActiveMilesAccountById(Integer Id);
+
 }

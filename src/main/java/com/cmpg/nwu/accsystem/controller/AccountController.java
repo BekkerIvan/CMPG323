@@ -11,11 +11,11 @@ import java.util.*;
 @RestController
 public class AccountController {
     @Autowired
-    public AccountRepository Repository;
+    public AccountRepository AccountRepository;
 
     @GetMapping("/login")
     public Object loginAccount(@RequestParam(name = "username") String UsernameStr, @RequestParam(name = "password") String PasswordStr) {
-        Account EnquiredAccount = Repository.findByUsername(UsernameStr);
+        Account EnquiredAccount = AccountRepository.findByUsername(UsernameStr);
         Map<String, String> ReturnArr = ProjectFunction.initAPIMessage();
         if (EnquiredAccount == null) {
             ProjectFunction.setAPIOutput(ReturnArr, false);
@@ -41,22 +41,50 @@ public class AccountController {
                                 @RequestParam(name = "email") String EmailStr,
                                 @RequestParam(name = "contactnumber", required = false) String ContactNumberStr,
                                 @RequestParam(name = "idnumber") String IDNumberStr) {
-
+        Map<String, String> ReturnArr = ProjectFunction.initAPIMessage();
         Account NewAccountObj = new Account();
+
+        if (ProjectFunction.validateIdNumber(IDNumberStr)) {
+            NewAccountObj.IdNumber = IDNumberStr;
+        } else {
+            ProjectFunction.setAPIOutput(ReturnArr, false);
+            ProjectFunction.setAPIValue(ReturnArr, "Message", "Invalid Id Number format given.");
+            return ReturnArr;
+        }
+        if (ProjectFunction.validateEmailAddress(EmailStr)) {
+            NewAccountObj.EmailAddress = EmailStr;
+        } else {
+            ProjectFunction.setAPIOutput(ReturnArr, false);
+            ProjectFunction.setAPIValue(ReturnArr, "Message", "Invalid Email address format given.");
+            return ReturnArr;
+        }
+
+
         NewAccountObj.FirstName = FirstNameStr;
         NewAccountObj.LastName = LastNameStr;
-        NewAccountObj.Username = UsernameStr == null ? EmailStr : UsernameStr;
-        NewAccountObj.EmailAddress = EmailStr;
-        NewAccountObj.ContactNumber = ContactNumberStr == null ? EmailStr : ContactNumberStr;
-        NewAccountObj.IdNumber = IDNumberStr;
-        PasswordStr = PasswordStr == null ? FirstNameStr + LastNameStr : PasswordStr;
+        NewAccountObj.Username = UsernameStr == null || UsernameStr.length() == 0 ? EmailStr : UsernameStr;
+        NewAccountObj.ContactNumber = ContactNumberStr == null || ContactNumberStr.length() == 0 ? EmailStr : ContactNumberStr;
+        PasswordStr = PasswordStr == null || PasswordStr.length() == 0 ? ProjectFunction.generateRandomString(5) + FirstNameStr + LastNameStr + ProjectFunction.generateRandomString(5) : PasswordStr;
         NewAccountObj.Password = ProjectFunction.hashPassword(PasswordStr);
         NewAccountObj.IsActive = true;
+
         try {
-            Repository.save(NewAccountObj);
-            return "Username : " + NewAccountObj.Username + "\n" + "Password: " + PasswordStr;
+            Account ExistingIdNumberAccountObj = AccountRepository.findByIdNumber(NewAccountObj.IdNumber);
+            Account ExistingUsernameAccountObj = AccountRepository.findByUsername(NewAccountObj.Username);
+            if (ExistingIdNumberAccountObj != null || ExistingUsernameAccountObj != null) {
+                ProjectFunction.setAPIOutput(ReturnArr, false);
+                ProjectFunction.setAPIValue(ReturnArr, "Message", "User already exists with given information");
+                return ReturnArr;
+            }
+
+            AccountRepository.save(NewAccountObj);
+            ProjectFunction.setAPIOutput(ReturnArr, true);
+            ProjectFunction.setAPIValue(ReturnArr, "Message", "Username : " + NewAccountObj.Username + "   " + "Password: " + PasswordStr);
+            return ReturnArr;
         } catch (Exception ExceptionObj) {
-            return "Error saving new Account : " + ExceptionObj.getMessage();
+            ProjectFunction.setAPIOutput(ReturnArr, false);
+            ProjectFunction.setAPIValue(ReturnArr, "Message", "Error saving new Account : " + ExceptionObj.getMessage());
+            return ReturnArr;
         }
     }
 }

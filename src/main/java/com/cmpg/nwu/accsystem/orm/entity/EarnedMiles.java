@@ -21,4 +21,28 @@ public class EarnedMiles extends ORMBase {
     @ManyToOne()
     @JoinColumn(name = "MilesAccount", referencedColumnName = "Id")
     public MilesAccount MilesAccount;
+
+    public float getMilesEarned() {
+        return MilesEarned;
+    }
+
+    public void setMilesEarned(float milesEarned) {
+        MilesEarned = milesEarned;
+    }
+
+    public Timestamp getDateEarned() {
+        return DateEarned;
+    }
+
+    public void setDateEarned(Timestamp dateEarned) {
+        DateEarned = dateEarned;
+    }
+
+    public com.cmpg.nwu.accsystem.orm.entity.MilesAccount getMilesAccount() {
+        return MilesAccount;
+    }
+
+    public void setMilesAccount(com.cmpg.nwu.accsystem.orm.entity.MilesAccount milesAccount) {
+        MilesAccount = milesAccount;
+    }
 }

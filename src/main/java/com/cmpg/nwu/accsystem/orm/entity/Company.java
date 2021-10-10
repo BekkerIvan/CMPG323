@@ -19,5 +19,29 @@ public class Company extends ORMBase {
     public FileDocument FileDocument;
 
     @OneToMany(mappedBy = "Company", orphanRemoval = true)
-    private List<Voucher> Voucher;
+    public List<Voucher> Voucher;
+
+    public String getCompanyName() {
+        return CompanyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        CompanyName = companyName;
+    }
+
+    public FileDocument getFileDocument() {
+        return FileDocument;
+    }
+
+    public void setFileDocument(FileDocument fileDocument) {
+        FileDocument = fileDocument;
+    }
+
+    public List<Voucher> getVoucher() {
+        return Voucher;
+    }
+
+    public void setVoucher(List<Voucher> voucher) {
+        Voucher = voucher;
+    }
 }

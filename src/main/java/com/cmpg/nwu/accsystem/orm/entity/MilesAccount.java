@@ -34,4 +34,60 @@ public class MilesAccount extends ORMBase {
 
     @OneToMany(mappedBy = "MilesAccount")
     public List<MilesSpent> MilesSpent;
+
+    public float getTotalMilesEarned() {
+        return TotalMilesEarned;
+    }
+
+    public void setTotalMilesEarned(float totalMilesEarned) {
+        TotalMilesEarned = totalMilesEarned;
+    }
+
+    public Date getDateActive() {
+        return DateActive;
+    }
+
+    public void setDateActive(Date dateActive) {
+        DateActive = dateActive;
+    }
+
+    public Boolean getActive() {
+        return IsActive;
+    }
+
+    public void setActive(Boolean active) {
+        IsActive = active;
+    }
+
+    public com.cmpg.nwu.accsystem.orm.entity.Account getAccount() {
+        return Account;
+    }
+
+    public void setAccount(com.cmpg.nwu.accsystem.orm.entity.Account account) {
+        Account = account;
+    }
+
+    public List<com.cmpg.nwu.accsystem.orm.entity.MilesGoal> getMilesGoal() {
+        return MilesGoal;
+    }
+
+    public void setMilesGoal(List<com.cmpg.nwu.accsystem.orm.entity.MilesGoal> milesGoal) {
+        MilesGoal = milesGoal;
+    }
+
+    public List<com.cmpg.nwu.accsystem.orm.entity.EarnedMiles> getEarnedMiles() {
+        return EarnedMiles;
+    }
+
+    public void setEarnedMiles(List<com.cmpg.nwu.accsystem.orm.entity.EarnedMiles> earnedMiles) {
+        EarnedMiles = earnedMiles;
+    }
+
+    public List<com.cmpg.nwu.accsystem.orm.entity.MilesSpent> getMilesSpent() {
+        return MilesSpent;
+    }
+
+    public void setMilesSpent(List<com.cmpg.nwu.accsystem.orm.entity.MilesSpent> milesSpent) {
+        MilesSpent = milesSpent;
+    }
 }

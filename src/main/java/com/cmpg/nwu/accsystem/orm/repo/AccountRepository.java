@@ -15,5 +15,8 @@ import java.util.*;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query(value = "SELECT * FROM Account WHERE Username = ?1", nativeQuery = true)
-    Account findByUsername(String Username);
+    Account findByUsername(String UsernameStr);
+
+    @Query(value = "SELECT * FROM Account WHERE IdNumber = ?1", nativeQuery = true)
+    Account findByIdNumber(String IdNumberStr);
 }
